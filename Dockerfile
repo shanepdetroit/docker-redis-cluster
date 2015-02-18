@@ -16,4 +16,6 @@ RUN gem install redis
 ADD conf/redis.conf redis.conf
 ADD run.sh /run.sh
 ENV REDIS_NODE_PORT=7000
+# sets ip to eth1 private network ip
+ENV REDIS_NODE_IP="$(ifconfig | grep -A 1 'eth0' | tail -1 | cut -d ':' -f 2 | cut -d ' ' -f 1)"
 ENTRYPOINT ["/bin/bash","/run.sh"]
